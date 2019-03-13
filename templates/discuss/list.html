@@ -1,0 +1,23 @@
+{% extends 'layout/base.html'%}
+
+{% block content %}
+
+<table class="table is-fullwidth">
+  <thead>
+    <th>標題</th>
+    <th>發佈者</th>
+    <th>發佈時間</th>
+  </thead>
+  <tbody>
+    {% for post in posts %}
+    <tr>
+      <td><a href="/discuss/{{post.id}}">{{post.title}}</a></td>
+      <td>{{post.user.profile.nickname}}</td>
+      <td>{{post.create_date}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+
+</table>
+
+{% endblock %}

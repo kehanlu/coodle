@@ -1,0 +1,25 @@
+{% extends 'layout/base.html'%}
+
+{% block content %}
+
+<table class="table is-fullwidth">
+  <thead>
+    <th>標題</th>
+    <th>描述</th>
+    <th>出題者</th>
+    <th>最後修改</th>
+  </thead>
+  <tbody>
+    {% for problem in problems %}
+    <tr>
+      <td><a href="/problem/{{problem.id}}">{{problem.title}}</a></td>
+      <td>{{problem.short_description}}</td>
+      <td>{{problem.user.profile.nickname}}</td>
+      <td>{{problem.last_modified}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+
+</table>
+
+{% endblock %}

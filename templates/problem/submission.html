@@ -1,0 +1,54 @@
+{% extends 'layout/base.html' %}
+
+
+{% block content %}
+
+<table class="table is-fullwidth">
+  <thead>
+    <th>題目</th>
+    <th>提交者</th>
+    <th>code</th>
+  </thead>
+  <tbody>
+    {% for submission in submissions %}
+    <tr>
+      <td><a href="/problem/{{submission.problem.id}}">{{submission.problem.title}}</a></td>
+      <td>{{submission.user.profile.nickname}}</td>
+      <td><button class="button" onclick="showCode({{submission.id}})">code</button></td>
+      {% endfor %}
+    </tr>
+  </tbody>
+</table>
+
+
+<div class="modal" id="code-modal">
+  <div class="modal-background"></div>
+  <div class="modal-content">
+    <pre><code class="python">
+
+    </code></pre>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block footer %}
+
+<script>
+  function showCode(id) {
+    fetch('/problem/api/submission/' + id).then(function (response) {
+      return response.json()
+    }).then(function (resp) {
+      document.getElementById('code-modal').classList.add('is-active')
+      document.querySelector('#code-modal .modal-content pre code').innerHTML = resp['code']
+      hljs.highlightBlock(document.querySelector("#code-modal pre code"))
+    })
+  }
+
+  document.addEventListener('click', function (event) {
+    if (!event.target.matches('.modal-background')) return;
+    event.target.parentNode.classList.remove('is-active');
+  }, false)
+</script>
+
+{% endblock %}

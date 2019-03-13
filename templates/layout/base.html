@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zh-tw">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coodle</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css">
+  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/tomorrow.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+  <link rel="stylesheet" href="{% static 'css/style.css'%}">
+  {% block header%}
+  {% endblock %}
+</head>
+
+
+<body>
+  {% include 'layout/nav.html'%}
+
+  {% if request.user.is_authenticated %}
+  <!-- <section class="hero has-text-centered is-bold">
+    <div class="hero-body profile">
+      <div class="container">
+        <div class="avatar profile-avatar" style="background-image: url('{{ user.socialaccount_set.all.0.get_avatar_url }}')">
+        </div>
+        <h1 class="title is-4">{{user.first_name}} {{user.last_name}}</h1>
+        <h2 class="subtitle">{{user.email}}</h2>
+      </div>
+    </div>
+  </section> -->
+  {% endif %}
+
+  <div class="container">
+    {% block content%}
+    {% endblock %}
+  </div>
+
+  {% include 'layout/footer.html'%}
+
+</body>
+
+{% block footer %}
+{% endblock %}
+
+</html>
