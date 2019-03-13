@@ -2,6 +2,10 @@
 
 {% block content %}
 
+{% if request.user.is_superuser %}
+<a class="button is-success" style="margin:20px;" href="/problem/post">新增題目</a>
+{% endif %}
+
 <table class="table is-fullwidth">
   <thead>
     <th>標題</th>

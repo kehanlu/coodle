@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseNotFound, JsonResponse
 from problem.models import Problem, Submission
+import markdown
 
 
 def problem_list(request):
@@ -31,6 +32,22 @@ def submission(request, pid):
         'submissions': problem.psub.all().order_by('-submit_date'),
     }
     return render(request, 'problem/submission.html', context)
+
+
+def post(request):
+    return render(request, 'problem/create.html', {})
+
+
+def api_post(request):
+    data = request.POST
+    description = markdown.markdown(
+        data['description'], extensions=['fenced_code'])
+
+    problem = Problem.objects.create(user=request.user,
+                                     title=data['title'],
+                                     description=description,
+                                     short_description=data['short_description'])
+    return redirect('/problem/{}'.format(problem.id))
 
 
 def api_submit(request, pid):

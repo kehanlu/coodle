@@ -1,0 +1,36 @@
+{% extends 'layout/base.html' %}
+
+{% block content %}
+
+<section class="section">
+  <h2 class="title is-2">Start a topic</h2>
+  <form action="/problem/api/post" method="POST">
+    {% csrf_token %}
+
+    <div class="field">
+      <label class="label">標題</label>
+      <div class="control">
+        <input class="input" name="title" type="text">
+      </div>
+    </div>
+    <div class="field">
+      <label class="label">短描述</label>
+      <div class="control">
+        <input class="input" name="short_description" type="text">
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label">問題描述</label>
+      <div class="control">
+        <textarea name="description" cols="30" rows="10" class="textarea" placeholder="可以使用 markdown "></textarea>
+      </div>
+    </div>
+
+    <div class="field">
+      <button class="button is-success" type="submit" style="margin-top: 30px">submit</button>
+    </div>
+  </form>
+</section>
+
+{% endblock %}

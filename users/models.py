@@ -7,3 +7,6 @@ class Profile(models.Model):
         User, on_delete=models.CASCADE, related_name="profile")
     point = models.IntegerField(default=0)
     nickname = models.CharField(max_length=200)
+
+    def __str__(self):
+        return "{} ({})".format(self.nickname, self.user.email)
