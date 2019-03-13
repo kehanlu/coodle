@@ -1,19 +1,20 @@
 {% load static %}
-
-<nav class="navbar is-transparent">
+<nav class="navbar" role="navigation" aria-label="main navigation">
   <div class="container">
     <div class="navbar-brand">
       <a class="navbar-item" href="/">
         Coodle
       </a>
-      <div class="navbar-burger burger" data-target="navbarExampleTransparentExample">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
+
+      <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
     </div>
 
-    <div class="navbar-menu">
+    <div id="navbarBasicExample" class="navbar-menu">
+
       <div class="navbar-start">
         <a class="navbar-item" href="/problem">
           練習題
@@ -48,16 +49,16 @@
           </a>
           {% endif %}
 
-          <div class="navbar-item">
-            <a class="bd-tw-button button" href="https://github.com/kehanlu/python">
-              <span class="icon">
-                <i class="fab fa-github"></i>
-              </span>
-              <span>
-                課程資訊
-              </span>
-            </a>
-          </div>
+          <!-- <div class="navbar-item"> -->
+          <a class="bd-tw-button button" href="https://github.com/kehanlu/python">
+            <span class="icon">
+              <i class="fab fa-github"></i>
+            </span>
+            <span>
+              課程資訊
+            </span>
+          </a>
+          <!-- </div> -->
 
         </div>
       </div>
