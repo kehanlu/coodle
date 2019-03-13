@@ -9,4 +9,4 @@ class Profile(models.Model):
     nickname = models.CharField(max_length=200)
 
     def __str__(self):
-        return "{} ({})".format(self.nickname, self.user.email)
+        return "{}".format(self.nickname)
