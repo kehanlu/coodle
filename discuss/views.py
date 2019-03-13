@@ -6,7 +6,7 @@ import markdown
 
 def list(request):
     context = {
-        "posts": Post.objects.all()
+        "posts": Post.objects.all().order_by('-create_date')
     }
     return render(request, 'discuss/list.html', context)
 

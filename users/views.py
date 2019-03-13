@@ -8,7 +8,7 @@ from users.models import Profile
 
 def submission(request):
     context = {
-        'submissions': request.user.usub.all()
+        'submissions': request.user.usub.all().order_by('-submit_date')
     }
     return render(request, 'problem/submission.html', context)
 

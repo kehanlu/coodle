@@ -5,7 +5,7 @@ from problem.models import Problem, Submission
 
 def problem_list(request):
     context = {
-        'problems': Problem.objects.all()
+        'problems': Problem.objects.all().order_by('-create_date')
     }
     return render(request, 'problem/list.html', context)
 
@@ -28,7 +28,7 @@ def submission(request, pid):
     problem = Problem.objects.get(id=pid)
 
     context = {
-        'submissions': problem.psub.all(),
+        'submissions': problem.psub.all().order_by('-submit_date'),
     }
     return render(request, 'problem/submission.html', context)
 
