@@ -2,8 +2,9 @@
 
 {% block content %}
 
+{% if request.user.is_authenticated%}
 <a class="button is-success" style="margin:20px;" href="/discuss/post">新增討論</a>
-
+{% endif %}
 <table class="table is-fullwidth">
   <thead>
     <th>標題</th>
