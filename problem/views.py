@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseNotFound, JsonResponse
 from problem.models import Problem, Submission
-import markdown
+import markdown as md
 
 
 def problem_list(request):
@@ -16,8 +16,11 @@ def problem(request, pid):
     if not Problem.objects.filter(id=pid).exists():
         return HttpResponseNotFound()
 
+    problem = Problem.objects.get(id=pid)
+    problem.description = md.markdown(
+        problem.description, extensions=['fenced_code'])
     context = {
-        'problem': Problem.objects.get(id=pid),
+        'problem': problem,
     }
     return render(request, 'problem/single.html', context)
 
@@ -40,12 +43,10 @@ def post(request):
 
 def api_post(request):
     data = request.POST
-    description = markdown.markdown(
-        data['description'], extensions=['fenced_code'])
 
     problem = Problem.objects.create(user=request.user,
                                      title=data['title'],
-                                     description=description,
+                                     description=data['description'],
                                      short_description=data['short_description'])
     return redirect('/problem/{}'.format(problem.id))
 

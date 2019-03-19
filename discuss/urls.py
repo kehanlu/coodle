@@ -2,7 +2,7 @@ from django.urls import path
 from discuss import views
 
 urlpatterns = [
-    path('', views.list),
+    path('', views.post_list),
     path('<int:pid>', views.discuss),
     path('post', views.post),
     path('api/post', views.api_post),

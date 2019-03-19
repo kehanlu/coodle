@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponseNotFound
 from discuss.models import Post, Comment
-import markdown
+import markdown as md
 
 
-def list(request):
+def post_list(request):
     context = {
         "posts": Post.objects.all().order_by('-create_date')
     }
@@ -15,11 +15,18 @@ def discuss(request, pid):
     if not Post.objects.filter(id=pid).exists():
         return HttpResponseNotFound()
     post = Post.objects.get(id=pid)
+    post.content = md.markdown(post.content, extensions=['fenced_code'])
+
+    comments_query = post.comment.all().order_by('-create_date')
+    comments = list()
+    for comment in comments_query:
+        comment.content = md.markdown(
+            comment.content, extensions=['fenced_code'])
+        comments.append(comment)
     context = {
         'post': post,
-        'comments': post.comment.all().order_by('-create_date')
+        'comments': comments
     }
-
     return render(request, 'discuss/single.html', context)
 
 
@@ -29,10 +36,9 @@ def post(request):
 
 def api_post(request):
     data = request.POST
-    content = markdown.markdown(data['content'], extensions=['fenced_code'])
 
     post = Post.objects.create(user=request.user,
-                               title=data['title'], content=content)
+                               title=data['title'], content=data['content'])
     return redirect('/discuss/{}'.format(post.id))
 
 
@@ -41,9 +47,7 @@ def api_comment(request, pid):
         return HttpResponseNotFound()
     post = Post.objects.get(id=pid)
     data = request.POST
-
-    content = markdown.markdown(data['content'], extensions=['fenced_code'])
     Comment.objects.create(user=request.user, post=post,
-                           content=content)
+                           content=data['content'])
 
     return redirect('/discuss/{}'.format(pid))
